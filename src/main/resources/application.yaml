@@ -1,6 +1,19 @@
 server:
-  address: 192.168.0.204
   port: 8282
+
+spring:
+  datasource:
+    url: jdbc:h2:file:./h2.db;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: 'create-drop'
+  h2:
+    console:
+      enabled: true
 
 logging:
   level:

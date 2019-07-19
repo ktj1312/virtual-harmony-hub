@@ -9,14 +9,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbr_command")
+@Table(name = "tbr_ircode")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class CommandEntity {
+@AllArgsConstructor
+public class IrCodeEntity {
     @Id
     private String id;
-    private String name;
-    private String slug;
-    private String label;
+    private String type;
+    private String data;
+    private Integer length;
+    private Integer repeat;
+    private Integer rdelay;
+    private Integer khz;
+    private Integer pulse;
 }
