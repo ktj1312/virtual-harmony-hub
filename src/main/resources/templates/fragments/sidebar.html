@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="sidebarFragment">
+
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h2>v-hub-manager</h2>
+        </div>
+
+        <ul class="list-unstyled components">
+            <li id="sidebar_home" class="active">
+                <a th:href="@{/ui}">Home</a>
+            </li>
+
+            <li id="sidebar_hubs">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Hubs</a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li th:each="hub : ${hubs}">
+                        <td><a th:href="@{/ui/{hubName}/devices(hubName=${hub.hubName})}" th:text="${hub.hubName}"></a></td>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">About</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+</html>

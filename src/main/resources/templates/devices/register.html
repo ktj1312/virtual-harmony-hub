@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script type="text/javascript">
+        function goBack(){
+            window.history.back();
+        }
+    </script>
+</th:block>
+
+<div layout:fragment="content">
+
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Register New Device</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form role="form" method="post">
+            <div class="box-body" th:object="${device}">
+                <div class="form-group">
+                    <label for="inputDeviceName">deviceName</label>
+                    <input th:field="*{slug}"  type="text" class="form-control" id="inputDeviceName" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputDeviceIp">deviceLabel</label>
+                    <input th:field="*{label}" type="text" class="form-control" id="inputDeviceIp" required>
+                </div>
+            </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Register</button>
+                <button type="button" class="btn btn-warning" onclick="goBack();">Back</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script src="https://cdn.jsdelivr.net/npm/table-to-json@0.13.0/lib/jquery.tabletojson.min.js" integrity="sha256-AqDz23QC5g2yyhRaZcEGhMMZwQnp8fC6sCZpf+e7pnw=" crossorigin="anonymous"></script>
+    <script src="/js/commands/table.js"></script>
+    <script type="text/javascript">
+        function goBack(){
+            window.history.back();
+        }
+
+    </script>
+</th:block>
+
+<div layout:fragment="content">
+
+    <div class="container">
+        <form id="commandsForm" th:action="@{/ui/{hubName}/devices/{deviceName}/commands(hubName=${hub.hubName},deviceName=${device.slug})}">
+        <table id="command_table" class="table table-dark">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">name</th>
+                <th scope="col">slug</th>
+                <th scope="col">label</th>
+                <th scope="col">type</th>
+                <th scope="col">data</th>
+                <th scope="col">length</th>
+                <th scope="col">khz</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="command : ${commands}">
+                <td><input type="text" name="id" th:value="${command.id}" class="form-control" readonly></td>
+                <td><input type="text" name="name" th:value="${command.name}" class="form-control" required></td>
+                <td><input type="text" name="slug" th:value="${command.slug}" class="form-control" required></td>
+                <td><input type="text" name="label" th:value="${command.label}" class="form-control" required></td>
+                <td><input type="text" name="type" th:value="${command.ir_code.type}" class="form-control" required></td>
+                <td><input type="text" name="data" th:value="${command.ir_code.data}" class="form-control" required></td>
+                <td><input type="text" name="length" th:value="${command.ir_code.length}" class="form-control"></td>
+                <td><input type="text" name="khz" th:value="${command.ir_code.khz}" class="form-control"></td>
+                <!--<td><input type="button" class="ibtnDel btn btn-md btn-danger " value="Delete"></td>-->
+                <td><button type="button" class="ibtnDel btn btn-md btn-danger ">Delete</button></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <input type="button" class="btn btn-lg btn-block " id="addrow" value="Add Row" />
+
+        <div class="box-footer">
+            <button id="btn-register" type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-warning" onclick="goBack();">Cancle</button>
+        </div>
+        </form>
+    </div>
+
+</div>
+</html>

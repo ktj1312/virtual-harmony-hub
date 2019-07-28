@@ -2,15 +2,13 @@ package tk.ktj1312.virtualhub;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import tk.ktj1312.virtualhub.entity.CommandEntity;
 import tk.ktj1312.virtualhub.entity.DeviceEntity;
 import tk.ktj1312.virtualhub.entity.HubEntity;
+import tk.ktj1312.virtualhub.entity.IrCodeEntity;
 import tk.ktj1312.virtualhub.repository.HubEntityRepository;
 
 import java.util.Arrays;
@@ -26,9 +24,14 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent event){
 
-        CommandEntity commandOn = new CommandEntity("1","ChannelDown","channel-down", "Channel Down");
-        DeviceEntity deviceEntity = new DeviceEntity("1","tivo-premiere","TiVo Premiere", Arrays.asList(commandOn));
-        HubEntity hubEntity = new HubEntity("1","v_hub","192.168.0.21",Collections.singletonList(deviceEntity));
+        IrCodeEntity codeOn = new IrCodeEntity("nec","FF827D",32,null,null,null,null);
+        CommandEntity commandOn = new CommandEntity("ChannelDown","channel-down", "Channel Down",codeOn);
+
+        IrCodeEntity codeOff = new IrCodeEntity("raw","[2450,600,1300,600,700,550,1300,600,700,550,1300,550,700,550,700,600,1300,600,700,550,700,550,700,550,700]",null,null,null,38,null);
+        CommandEntity commandOff = new CommandEntity("ChannelUp","channel-up", "Channel Up",codeOff);
+
+        DeviceEntity deviceEntity = new DeviceEntity("tivo-premiere","TiVo Premiere", Arrays.asList(commandOn,commandOff));
+        HubEntity hubEntity = new HubEntity("v_hub","192.168.0.170","1234",Collections.singletonList(deviceEntity));
         hubEntity = hubEntityRepository.save(hubEntity);
 
         log.info("Loaded 1 dummy data " + hubEntity.toString());

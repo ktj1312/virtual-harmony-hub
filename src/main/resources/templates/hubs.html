@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+</th:block>
+
+<div layout:fragment="content">
+
+    <div class="container">
+
+        <p><a href="ui/hubs/register"><i class="fa fa-dashboard"></i> 등록</a></p>
+
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">hubName</th>
+                <th scope="col">hubIp</th>
+                <th scope="col">hubPass</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="hub : ${hubs}">
+                <td th:text="${hub.id}"></td>
+                <td><a th:href="@{/ui/{hubName}/devices(hubName=${hub.hubName})}" th:text="${hub.hubName}"></a></td>
+                <td th:text="${hub.hubIp}"></td>
+                <td th:text="${hub.hubPass}"></td>
+                <td><button type="button" class="btn btn-warning" th:onclick="'window.location.href = \'' + @{/ui/hubs/{id}/modify(id=${hub.id})} + '\''" >Modify</button></td>
+                <td><button type="button" class="btn btn-danger" th:onclick="'window.location.href = \'' + @{/ui/hubs/{id}/delete(id=${hub.id})} + '\''" >Delete</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</html>
