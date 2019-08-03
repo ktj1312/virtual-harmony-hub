@@ -2,8 +2,6 @@ package tk.ktj1312.virtualhub.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import tk.ktj1312.virtualhub.entity.CommandEntity;
-import tk.ktj1312.virtualhub.entity.DeviceEntity;
 
 import java.util.List;
 

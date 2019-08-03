@@ -2,7 +2,6 @@ package tk.ktj1312.virtualhub.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tk.ktj1312.virtualhub.dto.HubDto;
 
 import javax.persistence.*;
 import java.util.List;
