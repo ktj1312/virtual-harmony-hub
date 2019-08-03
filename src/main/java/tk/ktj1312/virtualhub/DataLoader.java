@@ -24,6 +24,7 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent event){
 
+        /*
         IrCodeEntity codeOn = new IrCodeEntity("nec","FF827D",32,null,null,null,null);
         CommandEntity commandOn = new CommandEntity("ChannelDown","channel-down", "Channel Down",codeOn);
 
@@ -31,6 +32,16 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
         CommandEntity commandOff = new CommandEntity("ChannelUp","channel-up", "Channel Up",codeOff);
 
         DeviceEntity deviceEntity = new DeviceEntity("tivo-premiere","TiVo Premiere", Arrays.asList(commandOn,commandOff));
+        */
+
+        IrCodeEntity codeOn = new IrCodeEntity("nec","616A817E",32,null,null,null,null);
+        CommandEntity commandOn = new CommandEntity("PowerOn","power-on", "Power On",codeOn);
+
+        IrCodeEntity codeOff = new IrCodeEntity("nec","616A817E",32,null,null,null,null);
+        CommandEntity commandOff = new CommandEntity("PowerOff","power-off", "Power Off",codeOff);
+
+        DeviceEntity deviceEntity = new DeviceEntity("lg-aircon","Lg Aircon", Arrays.asList(commandOn,commandOff));
+
         HubEntity hubEntity = new HubEntity("v_hub","192.168.0.170","1234",Collections.singletonList(deviceEntity));
         hubEntity = hubEntityRepository.save(hubEntity);
 

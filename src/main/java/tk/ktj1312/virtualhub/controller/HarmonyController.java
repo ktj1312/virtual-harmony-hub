@@ -55,14 +55,17 @@ public class HarmonyController {
         return response;
     }
 
-
-
     @GetMapping("/{hubName}/devices")
     public HubDto.Device getDevices(@PathVariable("hubName") String hubName){
 
         HubEntity hubEntity = hubEntityRepository.findByHubName(hubName).orElseThrow(()->new EntityNotFoundException("can't find "+hubName ));
 
-        HubDto.Device devices = new HubDto.Device(hubEntity.getDevices());
+        List<HubDto.ResDeviceDto> resDeviceDtos = hubEntity.getDevices().stream()
+                .map(entity->
+                        new HubDto.ResDeviceDto(String.valueOf(entity.getId()),entity.getSlug(),entity.getLabel()))
+                .collect(Collectors.toList());
+
+        HubDto.Device devices = new HubDto.Device(resDeviceDtos);
 
         return devices;
     }
@@ -79,7 +82,12 @@ public class HarmonyController {
                 commandEntities.addAll(device.getCommands());
         }
 
-        HubDto.Command commands = new HubDto.Command(commandEntities);
+        List<HubDto.ResCommandDto> resCommandDtos = commandEntities.stream()
+                .map(entity->
+                        new HubDto.ResCommandDto(String.valueOf(entity.getId()),entity.getName(),entity.getSlug(),entity.getLabel()))
+                .collect(Collectors.toList());
+
+        HubDto.Command commands = new HubDto.Command(resCommandDtos);
 
         return commands;
     }
@@ -88,7 +96,7 @@ public class HarmonyController {
     public Map<String,String> postCommands(
             @PathVariable("hubName") String hubName,
             @PathVariable("deviceSlug")String deviceSlug,
-            @PathVariable("commandSlug")String commandSlug) throws JsonProcessingException , IOException , JSONException {
+            @PathVariable("commandSlug")String commandSlug) throws IOException , JSONException {
 
         HubEntity hubEntity = hubEntityRepository
                 .findByHubNameAndDevices_slug(hubName,deviceSlug)

@@ -153,6 +153,7 @@ public class UiController {
         HubEntity hubEntity = hubEntityRepository.findById(Long.valueOf(hubId)).orElseThrow(()->new EntityNotFoundException("can't find hub "+hubId ));
         deviceEntityRepository.deleteById(Long.valueOf(deviceId));
 
+
         return "redirect:/ui/" + hubEntity.getHubName() + "/devices";
     }
 
